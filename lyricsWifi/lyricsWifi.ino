@@ -5,7 +5,7 @@ char receivedData;
 int command = 0;
 int inputStatus = -1;
 
-SoftwareSerial mySerial(6,5); // RX, TX
+SoftwareSerial mySerial(6, 5); // RX, TX
 
 void setup() {
   mySerial.begin(9600);
@@ -51,5 +51,9 @@ void loop() {
         inputStatus = 0;
       }
     }
+  }
+
+  if (mySerial.available()) {
+    Serial.write(mySerial.read());
   }
 }
