@@ -1,18 +1,25 @@
+// 1411
+#include <SoftwareSerial.h>
+
 char receivedData;
 int command = 0;
 int inputStatus = -1;
 
+SoftwareSerial mySerial(6,5); // RX, TX
+
 void setup() {
-  Serial.begin(115200);
-  
+  mySerial.begin(9600);
+  Serial.begin(9600);
+
   delay(1000);
-  Serial.println("Arduino Start!");
+  Serial.println("start");
 }
 
 void loop() {
   if (Serial.available()) {
     char c = Serial.read();
     Serial.write(c);
+    mySerial.write(c);
 
     if (c == '@') {
       inputStatus = 1;
@@ -24,9 +31,6 @@ void loop() {
       if (command == 1) {
         command = 0;
         inputStatus = 0;
-        // c == index
-        Serial.print("play ");
-        Serial.print(inputStatus);
       }
       // play
       else if (c == 'a') {
